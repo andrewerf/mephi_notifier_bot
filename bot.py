@@ -38,18 +38,29 @@ def logout_handler(update : Update, context : CallbackContext):
 
 
 def status_handler(update : Update, context : CallbackContext):
+	nothing = True
 	ret = []
+
+	if context.user_data['session'] == 0:
+		ret.append('no')
+	else:
+		ret.append('yes')
+
 	if context.user_data['allow_news']:
 		ret.append('news')
+		nothing = False
+	else:
+		ret.append('')
 	if context.user_data['allow_messages']:
 		ret.append('messages')
-
-	msg = 'Enabled:'
-	if len(ret) == 0:
-		msg += ' nothing'
+		nothing = False
 	else:
-		for n in ret:
-			msg += ' ' + n
+		ret.append('')
+
+	if nothing:
+		ret[1] = 'nothing'
+
+	msg = status_msg.format(*tuple(ret))
 
 	reply(update, context, msg)
 
@@ -78,6 +89,10 @@ def disallow_handler(update : Update, context : CallbackContext):
 		context.user_data['allow_messages'] = False
 
 	reply(update, context, disallow_succeeds_msg)
+
+
+def help_handler(update : Update, context : CallbackContext):
+	reply(update, context, help_msg)
 
 
 def notify(context : CallbackContext):
@@ -114,6 +129,7 @@ if __name__ == '__main__':
 	dp.add_handler(CommandHandler('disallow', disallow_handler))
 	dp.add_handler(CommandHandler('login', login_handler))
 	dp.add_handler(CommandHandler('logout', logout_handler))
+	dp.add_handler(CommandHandler('help', help_handler))
 
 	job_queue.run_repeating(notify, interval=5, first=10)
 
