@@ -1,3 +1,4 @@
+import logging
 from telegram.ext import Updater, CommandHandler, CallbackContext
 from telegram.update import Update
 
@@ -117,6 +118,7 @@ def notify(context : CallbackContext):
 
 
 if __name__ == '__main__':
+	logging.basicConfig(filename='/var/log/mephi_notifier_bot.log', level=logging.WARNING)
 	storage = SqlPersistence(db, True, False, False, UserData)
 	updater = Updater(token="1099627440:AAFyWjowulFH_f_a4Y_mnDiO7pYngvFcQhM", use_context=True, persistence=storage)
 
