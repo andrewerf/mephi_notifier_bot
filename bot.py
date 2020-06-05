@@ -1,6 +1,8 @@
 from telegram.ext import Updater, CommandHandler, CallbackContext
 from telegram.update import Update
 
+from sql_models import *
+from sql_persistance import SqlPersistence
 from parser import login, get_news_count, get_msgs_count
 from bot_messages import *
 
@@ -10,8 +12,8 @@ def reply(update, context, msg):
 
 
 def start_handler(update : Update, context : CallbackContext):
-	context.user_data['chat_id'] = update.effective_chat.id
-	context.user_data['session'] = None
+	context.user_data['id'] = update.effective_chat.id
+	context.user_data['session'] = 0
 	context.user_data['allow_news'] = False
 	context.user_data['allow_messages'] = False
 	context.user_data['news_count'] = 0
@@ -31,8 +33,7 @@ def login_handler(update : Update, context : CallbackContext):
 
 
 def logout_handler(update : Update, context : CallbackContext):
-	context.user_data['session'] = None
-	
+	context.user_data['session'] = 0
 	reply(update, context, logout_succeeds_msg)
 
 
@@ -81,7 +82,7 @@ def disallow_handler(update : Update, context : CallbackContext):
 
 def notify(context : CallbackContext):
 	for data in context.dispatcher.user_data.values():
-		if data['session'] is None:
+		if data['session'] == 0:
 			continue
 
 		msg = ''
@@ -94,14 +95,15 @@ def notify(context : CallbackContext):
 			msg += 'New message on home.mephi.ru!'
 
 		if len(msg) > 0:
-			context.bot.send_message(data['chat_id'], msg)
+			context.bot.send_message(data['id'], msg)
 
 		data['news_count'] = news_count
 		data['messages_count'] = messages_count
 
 
 if __name__ == '__main__':
-	updater = Updater(token="1099627440:AAFyWjowulFH_f_a4Y_mnDiO7pYngvFcQhM", use_context=True)
+	storage = SqlPersistence(db, True, False, False, UserData)
+	updater = Updater(token="1099627440:AAFyWjowulFH_f_a4Y_mnDiO7pYngvFcQhM", use_context=True, persistence=storage)
 
 	job_queue = updater.job_queue
 	dp = updater.dispatcher
