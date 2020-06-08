@@ -1,0 +1,39 @@
+ru:
+  help: |
+    Войти в систему (имя пользователя и пароль от auth.mephi.ru):
+    /login username password
+    Выйти:
+    /logout
+    Выбрать язык:
+    /locale [en | ru]
+    Посмотреть статус:
+    /status
+    Включить уведомления:
+    /allow [messages | news | all]
+    Выключить уведомления:
+    /disallow [messages | news | all]
+    Вывести это сообщение:
+    /help
+
+  welcome: |
+    Это бот-уведомлялка о сообщениях и обновлениях с портала home.mephi.ru. Список команд: /help"
+
+  status: |
+    Вход выполнен: {}
+    Разрешённые уведомления: {} {}
+
+  login_succeeds: Вы успешно вошли
+
+  logout_succeeds: Вы успешно вышли
+
+  allow_succeds: Уведомления добавлены
+
+  disallow_succeeds: Уведомления отключены
+
+  new_message: Новое сообщение на home.mephi.ru!
+
+  new_update: Новое обновление на home.mephi.ru!
+
+  incorrect_locale: Неверный код языка! На данный момент поддерживаются только 'en' и 'ru'
+
+  locale_changed: Язык изменён на {}

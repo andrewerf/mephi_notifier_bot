@@ -1,0 +1,38 @@
+en:
+  help: |
+    Login to system (username and password from auth.mephi.ru):
+    /login username password
+    Logout:
+    /logout
+    Select language:
+    /locale [en | ru]
+    View status:
+    /status
+    Allow notifications:
+    /allow [messages | news | all]
+    Disallow notifications:
+    /disallow [messages | news | all]
+    Print this help:
+    /help
+
+  welcome: Welcome to notifier-bot for home.mephi.ru messages and news. Quick guid available via /help
+
+  status: |
+    Logged in: {}
+    Allowed: {} {}
+
+  login_succeeds: Login succeeds
+
+  logout_succeeds: Logout succeeds
+
+  allow_succeds: Notifications added
+
+  disallow_succeeds: Notifications removed
+
+  new_message: New message on home.mephi.ru!
+
+  new_update: New update on home.mephi.ru!
+
+  incorrect_locale: Incorrect locale! Only 'en' and 'ru' are now supported
+
+  locale_changed: Locale changed to {}

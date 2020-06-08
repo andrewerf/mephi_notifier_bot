@@ -12,6 +12,7 @@ class BaseModel(Model):
 
 class UserData(BaseModel):
 	id = PrimaryKeyField()
+	locale = CharField()
 	allow_news = BooleanField()
 	allow_messages = BooleanField()
 	news_count = IntegerField()
